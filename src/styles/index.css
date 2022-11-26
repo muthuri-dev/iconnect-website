@@ -15,16 +15,3 @@ code {
   display: flex;
   place-content:center ;
 }
-
-.below{
-  background-image: url('../assets/back.svg');
-  background-size:contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 400px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-
-}
