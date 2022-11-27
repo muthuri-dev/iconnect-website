@@ -3,6 +3,8 @@ import Loader from "./components/Loader";
 import Home from "./views/Home";
 import {useState, useEffect} from "react";
 import NotFound from "./components/NotFound";
+import LoginPage from "./views/log/login";
+import RegisterPage from "./views/log/register";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -20,6 +22,8 @@ function App() {
       :<Switch>
       <Routes>
         <Route exact path="/" element={<Home/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/register' element={<RegisterPage/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
      </Switch>

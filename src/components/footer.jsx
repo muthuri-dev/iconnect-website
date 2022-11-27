@@ -4,7 +4,7 @@ import Wave from "react-wavify"
 const Footer = () => {
     return ( 
         <>
-        <Grid container sx={{marginTop:20}}>
+        <Grid container >
             <Grid item>
             <Wave
              fill="#1A8724"

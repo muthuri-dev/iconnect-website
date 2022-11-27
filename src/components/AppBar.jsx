@@ -1,10 +1,13 @@
-import { Home, Newspaper, Person2Outlined } from "@mui/icons-material";
+import { Edit, Home, Newspaper, Person2Outlined } from "@mui/icons-material";
 import {AppBar, Grid, Tab, Tabs, Toolbar,useMediaQuery,useTheme,Box ,Typography} from "@mui/material";
 import Logo from "../assets/logo.ico";
 import { useState } from "react";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeView from "../views/Tabs/Home.view";
 import MyDrawer from "./Drawer";
+import PeersView from "../views/Tabs/Peers.View";
+import NewsView from "../views/Tabs/News.View";
+import BlogsView from "../views/Tabs/Blogs.View";
 
   
 
@@ -16,7 +19,7 @@ const MyAppBar = () => {
   }
 
   const theme= useTheme();
-  const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
 
     return ( 
         <>
@@ -38,7 +41,7 @@ const MyAppBar = () => {
                            <Tab label="Home" icon={<Home/>} iconPosition='start'/>
                            <Tab label="Peers" icon={<Person2Outlined/>} iconPosition='start'/>
                            <Tab label="News" icon={<Newspaper/>} iconPosition='start'/>
-                           <Tab label="Blogs" icon={<Newspaper/>} iconPosition='start'/>
+                           <Tab label="Blogs" icon={<Edit/>} iconPosition='start'/>
                          </Tabs>
                        </Box>
                         )
@@ -57,19 +60,19 @@ const MyAppBar = () => {
                      </Box>
                    )}
                    {tabIndex === 1 && (
-                     <Box>
-                       <Typography>The second tab</Typography>
+                     <Box sx={{marginTop:7}}>
+                       <PeersView/> 
                      </Box>
                    )}
                    {tabIndex === 2 && (
-                     <Box>
-                       <Typography>The third tab</Typography>
-                     </Box>
+                     <Box sx={{marginTop:7}}>
+                     <NewsView/>
+                   </Box>
                    )}
                    {tabIndex === 3 && (
-                     <Box>
-                       <Typography>The third tab</Typography>
-                     </Box>
+                    <Box sx={{marginTop:7}}>
+                    <BlogsView/>
+                  </Box>
                    )}
                  </Box>
         </>
