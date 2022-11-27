@@ -1,4 +1,4 @@
-import { Grid,Card, CardMedia, CardContent, Typography, TextField, Button } from "@mui/material";
+import { Grid,Card, CardMedia,Typography, TextField, Button } from "@mui/material";
 import Login from "./image/seventh.svg";
 import Logo from "./image/logo.png";
 import {useTheme} from "@mui/material";
@@ -44,7 +44,7 @@ const LoginPage = () => {
                     <TextField sx={{width:400,margin:1}} variant='outlined'label='Email' required type='email'/>
                     <TextField sx={{width:400,margin:1}} variant='outlined'label='Password'type='password' required/>
 
-                    <Button variant='contained' sx={{backgroundColor:'green',marginTop:4}} onClick={()=>navigate('/')}> LOGIN</Button>
+                    <Button variant='contained' sx={{backgroundColor:'green',marginTop:4}} onClick={()=>navigate('/home')}> LOGIN</Button>
                 </Grid>
                 </>
                     )

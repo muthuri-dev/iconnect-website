@@ -5,6 +5,11 @@ import {useState, useEffect} from "react";
 import NotFound from "./components/NotFound";
 import LoginPage from "./views/log/login";
 import RegisterPage from "./views/log/register";
+import Mentors from "./views/main/Mentors";
+import Projects from "./views/main/Projects";
+import PeersView from "./views/Tabs/Peers.View";
+import NewsView from "./views/Tabs/News.View";
+import BlogsView from "./views/Tabs/Blogs.View";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -18,12 +23,19 @@ function App() {
   return (
     <div className="App">
      {
-      loading ? <Loader/> 
+      loading ? <div style={{height:'100vh',display:'flex',justifyContent:'center',alignItems:'center'}}>
+        <Loader/> 
+      </div>
       :<Switch>
       <Routes>
-        <Route exact path="/" element={<Home/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/register' element={<RegisterPage/>}/>
+        <Route exact  path='/' element={<RegisterPage/>}/>
+        <Route exact  path='/login' element={<LoginPage/>}/>
+        <Route exact  path="/home" element={<Home/>}/>
+        <Route exact  path='/mentors' element={<Mentors/>}/>
+        <Route exact  path='/projects' element={<Projects/>}/>
+        <Route exact  path='/peers' element={<PeersView/>}/>
+        <Route exact  path='/news' element={<NewsView/>}/>
+        <Route exact  path='/blogs' element={<BlogsView/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
      </Switch>
