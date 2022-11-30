@@ -1,5 +1,5 @@
 import { Home } from "@mui/icons-material";
-import { Grid, IconButton,Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Grid, IconButton,Typography } from "@mui/material";
 import Project from "./image/fourth.svg";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
@@ -19,6 +19,7 @@ const Projects = () => {
     const[live, setLive] =useState('');
     const[image, setImage] =useState('');
     const[skills, setSkills] =useState('');
+    const [datas, setData]= useState([]);
 
     const handleProject=function(){
         setProject(true);
@@ -61,12 +62,16 @@ const Projects = () => {
             .catch(error=>console.log(error.message));
     }
     useEffect(()=>{
-        axios.get('http://localhost:8000/IKonnect/projects/')
+         axios.get('http://localhost:8000/IKonnect/projects/')
             .then(response=>{
-                if(response===200){
-
+                if(response.status===200){
+                    console.log(response.data.data);
+                    setData(response.data.data);
+                }else{
+                    console.log('get projects error');
                 }
             })
+            .catch(error=>console.log(error.message))
     },[]);
     
     return ( 
@@ -105,6 +110,30 @@ const Projects = () => {
                 <Button onClick={handleProjectClose} variant='contained' sx={{backgroundColor:'green', color:"white"}}>SUBMIT</Button>
             </DialogActions>
             </Dialog>
+            </Grid>
+            <Grid item>
+                {
+                    datas && datas.map(data=>{
+                        const blob = new Blob([Int8Array.from(data.image.data.data)], {type: data.image.contentType });
+                         const image = window.URL.createObjectURL(blob);
+                        return(
+                            <Card elevation={5} key={data._id}>
+                            <CardMedia
+                            component="img"
+                            height="150"
+                            image={image}
+                            alt={data.image.contentType }
+                            sx={{margin:1,objectFit:'contain'}}
+                            />
+                            <CardContent>
+                                <Typography>{data.projectName}</Typography>
+                            </CardContent>
+                        </Card>
+                        )
+                    })}
+                {
+                    !datas && <Typography>Loading ...</Typography>
+                }
             </Grid>
         </Grid>
         </>
