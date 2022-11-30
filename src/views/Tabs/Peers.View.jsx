@@ -11,11 +11,8 @@ const PeersView = () => {
     const[open, setOpen]=useState(false);
     const[name, setName]= useState('');
     const[email, setEmail] = useState('');
-    const[phone, setPhone]= useState('');
     const[portifolio, setPortifolio]= useState('');
     const[linkedin, setlinkedin]= useState('');
-    const[git, setGit]= useState('');
-    const[twitter, setTwitter]= useState('');
     const[ skills, setSkills]= useState('');
 
     const handleClick=function(){
@@ -33,26 +30,32 @@ const PeersView = () => {
     const handleLinkedin = function(e){
         setlinkedin(e.target.value);
     }
-    const handleGit = function(e){
-        setGit(e.target.value);
-    }
-    const handleTwitter = function(e){
-        setTwitter(e.target.value);
-    }
     const handleSkills = function(e){
         setSkills(e.target.value);
     }
     const handleClose=function(){
         setOpen(false);
         const newProfile=({
-            name:name,
+            username:name,
             email:email,
-            portifolio:portifolio,
+            portfolio:portifolio,
             linkedin:linkedin,
-            git:git,
-            twitter:twitter,
             skills:skills
         });
+        axios.post('http://localhost:8000/IKonnect/peers/',newProfile)
+             .then((response)=>{
+                 if(response.status===200){
+                     alert('Blog added');
+                     setName('');
+                     setEmail('');
+                     setPortifolio('');
+                     setlinkedin('');
+                     setSkills('');
+                 }else{
+                    console.log('not saved');
+                 }
+             })
+             .catch(error=>console.log(error.message));
         
     }
     return (  
@@ -74,8 +77,6 @@ const PeersView = () => {
                 <TextField sx={{width:300,margin:1}}required variant="outlined"color="primary"label='Email address' type='email'value={email} onChange={handleEmail}/>
                 <TextField sx={{width:300,margin:1}} variant="outlined"color="primary"label='Portifolio web'type='url'value={portifolio} onChange={handleWeb}/>
                 <TextField sx={{width:300,margin:1}} variant="outlined"color="primary"label='LinkedIn'type='url'value={linkedin} onChange={handleLinkedin}/>
-                <TextField sx={{width:300,margin:1}} variant="outlined"color="primary"label='GitHub'type='url'value={git} onChange={handleGit} />
-                <TextField sx={{width:300,margin:1}} variant="outlined"color="primary"label='Twitter'type='url' value={twitter} onChange={handleTwitter}/>
                 <TextField sx={{width:300,margin:1}}required variant="outlined"color="primary"label='Tech Skills'type='url' value={skills} onChange={handleSkills}/>
             </DialogContent>
             <DialogActions>

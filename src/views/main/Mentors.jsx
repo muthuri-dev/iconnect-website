@@ -11,9 +11,8 @@ const Mentors = () => {
 
     const[open, setOpen] =useState(false);
     const[name ,setName]=useState('');
-    const [git, setGit]=useState('');
-    const[linkedin, setLinkedin]=useState('');
-    const[phone, setPhone]= useState('');
+    const[company, setCompany]=useState('');
+    const[meeting, setMeeting]= useState('');
 
     const handleOpen= function(){
         setOpen(true);
@@ -21,30 +20,32 @@ const Mentors = () => {
     const handleName= function(e){
         setName(e.target.value);
     }
-    const handleGit= function(e){
-        setGit(e.target.value);
+    const handleCompany= function(e){
+        setCompany(e.target.value);
     }
-    const handleLinkedin= function(e){
-        setLinkedin(e.target.value);
-    }
-    const handlePhone= function(e){
-        setPhone(e.target.value);
+    const handleMeeting= function(e){
+        setMeeting(e.target.value);
     }
     const handleClose = function(){
         setOpen(false);
         const newMentor=({
-            name:name,
-            git:git,
-            linkedin:linkedin,
-            phone:phone
+            username:name,
+            company:company,
+            meeting:meeting,
         });
-        axios.post('http://localhost:8000/mentors',newMentor);
+        axios.post('http://localhost:8000/IKonnect/mentors',newMentor)
+            .then((response)=>{
+                if(response.status===200){
+                    alert('You are added as Mentor');
+                }
+            })
+            .catch(error=>console.log(error.message));
     }
     return ( 
         <>
         <Grid container direction='column' sx={{alignItems:'center'}}>
         <Grid item sx={{position:'fixed',width:'100%',justifyContent:'end',display:'flex'}}>
-                <IconButton onClick={()=>navigate('/')}>
+                <IconButton onClick={()=>navigate('/home')}>
                     <Home sx={{color:'green',fontSize:40}}/>
                 </IconButton>
             </Grid>
@@ -63,9 +64,8 @@ const Mentors = () => {
                 <DialogTitle sx={{fontFamily:'monospace',textAlign:'center'}}>Get assistance from Peers</DialogTitle>
                 <DialogContent sx={{textAlign:'center'}}>
                     <TextField required variant="outlined"label='Name'type='text' sx={{width:300,margin:1}} value={name} onChange={handleName}/>
-                    <TextField variant="outlined"label='GitHub Link'type='url' sx={{width:300,margin:1}} value={git} onChange={handleGit}/>
-                    <TextField variant="outlined"label=' Linkedin'type='url' sx={{width:300,margin:1}}value={linkedin} onChange={handleLinkedin}/>
-                    <TextField required variant="outlined"label='meeting link'type='text' sx={{width:300,margin:1}} value={phone} onChange={handlePhone}/>
+                    <TextField variant="outlined"label=' Linkedin'type='url' sx={{width:300,margin:1}}value={company} onChange={handleCompany}/>
+                    <TextField required variant="outlined"label='meeting link'type='text' sx={{width:300,margin:1}} value={meeting} onChange={handleMeeting}/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} variant="contained" sx={{color:'white',backgroundColor:'green'}}>BECOME</Button>

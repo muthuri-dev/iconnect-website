@@ -10,6 +10,8 @@ const NewsView = () => {
     const[title, setTitle]= useState('');
     const[content, setContent]= useState('');
     const[image, setImage]= useState('');
+
+    const formData = new FormData();
     const handleOpen= function(){
         setOpen(true);
     }
@@ -19,16 +21,25 @@ const NewsView = () => {
     const handleContent= function(e){
         setContent(e.target.value);
     }
-    const handleImage= function(e){
-        setImage(e.target.value);
-    }
-    const handleClose = function(){
+    const handleImage= function(event){
+        if(event.target.files && event.target.files.length>0){
+            setImage(event.target.files[0]);
+        }else return null;
+     }
+    const handleClose = function(event){
         setOpen(false);
-        const newNews=({
-            title:title,
-            content:content,
-            image:image
-        });
+        event.preventDefault();
+        formData.append('image',image);
+        formData.append('title',title);
+        formData.append('content',content);
+        console.log([...formData]);
+        axios.post('http://localhost:8000/IKonnect/news/',formData)
+        .then((response)=>{
+            if(response.status===200){
+                alert('News added');
+            }
+        })
+        .catch(error=>console.log(error.message));
     }
     return ( 
         <>
@@ -50,9 +61,9 @@ const NewsView = () => {
             <Dialog open={open}>
                 <DialogTitle sx={{fontFamily:'monospace',textAlign:'center'}}>Share Trends Here</DialogTitle>
                 <DialogContent sx={{textAlign:'center'}}>
-                    <TextField required color="primary" variant="outlined"label='Title'type='text' sx={{width:300,margin:1}} value={title} onChange={handleTitle}/>
-                    <TextField required color="primary" variant="outlined"label='Content'type='text' sx={{width:300,margin:1}} value={content} onChange={handleContent}/>
-                    <TextField  color="primary" variant="outlined"label='File'type='file' sx={{width:300,margin:1}} value={image} onChange={handleImage}/>
+                    <TextField required variant="outlined"label='Title'type='text' sx={{width:300,margin:1}} value={title} onChange={handleTitle}/>
+                    <TextField required variant="outlined" row={4} multiline fullWidth label='Content'type='text' sx={{width:300,margin:1}} value={content} onChange={handleContent}/>
+                    <TextField  variant="outlined"label=''type='file' sx={{width:300,margin:1}} onChange={handleImage}/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} variant="contained" sx={{backgroundColor:'green'}}>SHARE </Button>
