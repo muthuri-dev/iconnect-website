@@ -32,7 +32,7 @@ const RegisterPage = () => {
             password:password,
             email:email,
         });
-        axios.post('http://localhost:8000/IKonnect/register/',newUser)
+        axios.post('https://ikonnectback.onrender.com/IKonnect/register/',newUser)
             .then(response=>{
                 if(response.status===200){
                     navigate('/login');

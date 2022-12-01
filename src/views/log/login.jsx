@@ -29,7 +29,7 @@ const LoginPage = () => {
         email:email,
         password:password,
     });
-        axios.post('http://localhost:8000/IKonnect/login/',newLogin)
+        axios.post('https://ikonnectback.onrender.com/IKonnect/login/',newLogin)
             .then(response=>{
                 console.log(response.data);
                 if(response.data.status==='ok' && response.data.user===true){

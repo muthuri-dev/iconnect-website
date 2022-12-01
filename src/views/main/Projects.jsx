@@ -1,11 +1,12 @@
-import { Home } from "@mui/icons-material";
-import { Card, CardContent, CardMedia, Grid, IconButton,Typography } from "@mui/material";
+import { Home, ShareOutlined, ShareRounded, Twitter } from "@mui/icons-material";
+import { Card, CardContent, CardMedia, Grid, IconButton,Typography,CardActions } from "@mui/material";
 import Project from "./image/fourth.svg";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import {Fab, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useState,useEffect } from "react";
 import axios from 'axios';
+import { TwitterShareButton } from "react-share";
 
 
 const Projects = () => {
@@ -62,7 +63,7 @@ const Projects = () => {
             .catch(error=>console.log(error.message));
     }
     useEffect(()=>{
-         axios.get('http://localhost:8000/IKonnect/projects/')
+         axios.get('https://ikonnectback.onrender.com/IKonnect/projects/')
             .then(response=>{
                 if(response.status===200){
                     console.log(response.data.data);
@@ -72,7 +73,9 @@ const Projects = () => {
                 }
             })
             .catch(error=>console.log(error.message))
-    },[]);
+    },[datas]);
+
+    const currentPage= window.location.href;
     
     return ( 
         <>
@@ -111,13 +114,17 @@ const Projects = () => {
             </DialogActions>
             </Dialog>
             </Grid>
-            <Grid item>
+            <Grid container item sx={{justifyContent:'center'}}>
                 {
                     datas && datas.map(data=>{
-                        const blob = new Blob([Int8Array.from(data.image.data.data)], {type: data.image.contentType });
-                         const image = window.URL.createObjectURL(blob);
+                         const blob = new Blob([Int8Array.from(data.image.data.data)], {type: data.image.contentType });
+                          const image = window.URL.createObjectURL(blob);
+
                         return(
-                            <Card elevation={5} key={data._id}>
+                            <Card elevation={5} key={data._id} sx={{margin:4, height:'auto',width:300,boxShadow: "3px 3px 3px 3px green",shadowOpacity: 0.5,}}>
+                            <CardContent>
+                                <Typography sx={{color:'green',fontFamily:'monospace',fontWeight:'bold'}}>{data.projectName}</Typography>
+                            </CardContent>
                             <CardMedia
                             component="img"
                             height="150"
@@ -126,10 +133,29 @@ const Projects = () => {
                             sx={{margin:1,objectFit:'contain'}}
                             />
                             <CardContent>
-                                <Typography>{data.projectName}</Typography>
+                                <Typography>{data.description}</Typography>
+                                <Typography>Category: {data.category}</Typography>
+                                <Typography>Link: {data.liveLink}</Typography>
+                                <Typography>GitHub: {data.gitHub}</Typography>
                             </CardContent>
+                            <CardActions>
+                                <IconButton>
+                                    <ShareRounded/>
+                                </IconButton>
+                                <IconButton>
+                                    <TwitterShareButton
+                                    url={
+                                        currentPage
+                                    }
+                                    quote='please share this first'
+                                    hashtags='#code'
+                                    >
+                                        <Twitter color='primary'/>
+                                    </TwitterShareButton>
+                                </IconButton>
+                            </CardActions>
                         </Card>
-                        )
+                       )
                     })}
                 {
                     !datas && <Typography>Loading ...</Typography>

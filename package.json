@@ -2,7 +2,7 @@
   "name": "iconnect-website",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:8000/IKonnect/",
+  "proxy": "https://ikonnectback.onrender.com/IKonnect/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -22,6 +22,7 @@
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "react-share": "^4.4.1",
     "react-wavify": "^1.6.3",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4"
