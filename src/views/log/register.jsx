@@ -58,6 +58,7 @@ const RegisterPage = () => {
                     <TextField sx={{width:400,margin:1}} variant='outlined'label='Confirm Password'type='password' required value={password2} onChange={handlePassword2}/>
 
                     <Button variant='contained' sx={{backgroundColor:'green',marginTop:4}} onClick={handleRegister}> SUBMIT</Button>
+                    <Typography>Already have an Account? <Button onClick={()=>navigate('/login')} variant='text'>Login</Button></Typography>
                 </Grid>
                     ):(
                         <>

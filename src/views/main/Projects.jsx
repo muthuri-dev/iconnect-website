@@ -1,4 +1,4 @@
-import { Home, ShareOutlined, ShareRounded, Twitter } from "@mui/icons-material";
+import { FacebookOutlined, Home, LinkedIn, ShareOutlined, ShareRounded, Twitter } from "@mui/icons-material";
 import { Card, CardContent, CardMedia, Grid, IconButton,Typography,CardActions } from "@mui/material";
 import Project from "./image/fourth.svg";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import {Fab, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useState,useEffect } from "react";
 import axios from 'axios';
-import { TwitterShareButton } from "react-share";
+import { FacebookIcon, FacebookShareButton, LinkedinShareButton, TwitterShareButton } from "react-share";
 
 
 const Projects = () => {
@@ -54,7 +54,7 @@ const Projects = () => {
         formData.append('gitHub',git);
         formData.append('liveLink',live);
         console.log([...formData]);
-        axios.post('http://localhost:8000/IKonnect/projects/',formData)
+        axios.post('https://ikonnectback.onrender.com/IKonnect/projects/',formData)
             .then((response)=>{
                 if(response.status===200){
                     alert('Blog added');
@@ -72,8 +72,8 @@ const Projects = () => {
                     console.log('get projects error');
                 }
             })
-            .catch(error=>console.log(error.message))
-    },[datas]);
+            .catch(error=>console.log(error.message));
+    },[]);
 
     const currentPage= window.location.href;
     
@@ -139,20 +139,31 @@ const Projects = () => {
                                 <Typography>GitHub: {data.gitHub}</Typography>
                             </CardContent>
                             <CardActions>
-                                <IconButton>
-                                    <ShareRounded/>
-                                </IconButton>
-                                <IconButton>
-                                    <TwitterShareButton
+                                <TwitterShareButton
                                     url={
                                         currentPage
                                     }
-                                    quote='please share this first'
-                                    hashtags='#code'
+                                    
+                                    hashtags={[`${data.projectName}`]}
+                                    related={['testing']}
+                                    via={'IKonnect'}
                                     >
                                         <Twitter color='primary'/>
                                     </TwitterShareButton>
-                                </IconButton>
+                                    <FacebookShareButton
+                                     url={currentPage}
+                                     hashtags={['#IKonnect']}
+                                     quote={data.description}
+                                    >
+                                       <FacebookOutlined color='primary'/>
+                                    </FacebookShareButton>
+                                    <LinkedinShareButton
+                                        url={currentPage}
+                                        title={data.projectName}
+                                        summary={data.description}
+                                    >
+                                        <LinkedIn color='primary'/>
+                                    </LinkedinShareButton>
                             </CardActions>
                         </Card>
                        )
